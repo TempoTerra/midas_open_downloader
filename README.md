@@ -14,6 +14,7 @@ This project provides a mechanism for retrieving the MIDAS Open dataset from the
 - Supports downloading MIDAS Open dataset files using FTP or DAP.
 - Retrieves station capabilities files to determine the available years of data for each station.
 - Downloads hourly weather observation files for specified stations and years.
+- Provides a command-line interface to easily run the downloader as a standalone module.
 
 ## Prerequisites
 
@@ -42,34 +43,47 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Command-line Interface
+
+You can use the command-line interface to run the downloader as a standalone module:
+
+```
+python -m midas_open_downloader historic_county "station_id1,station_id2" start_year end_year
+```
+
+Examples:
+
+```
+python -m midas_open_downloader staffordshire "00622_keele,00623_oaken" 2022 2022
+python -m midas_open_downloader lancashire "01121_shuttleworth,01122_helmshore" 2021 2023
+```
+
+### Python Script
+
 1. Import the necessary modules in your Python script:
 
 ```python
-from downloader import download_midas_open_hourly_files
-from ftp_downloader import FTPDownloader
-from dap_downloader import HTTPDownloader
+from midas_open_downloader.retriever import Retriever
 ```
 
-2. Specify the historic county, station IDs, start year, and end year for the data you want to retrieve:
+2. Create an instance of the `Retriever` class:
+
+```python
+retriever = Retriever()
+```
+
+
+3. Call the `download_hourly_files` method with the desired arguments:
 
 ```python
 historic_county = "staffordshire"
 station_ids = ["00622_keele", "00623_oaken"]
 start_year = 2022
 end_year = 2022
+
+retriever.download_hourly_files(historic_county, station_ids, start_year, end_year)
 ```
 
-3. Call the `download_midas_open_hourly_files` function with the desired downloader (FTP or DAP):
-
-```python
-# Use FTPDownloader
-download_midas_open_hourly_files(FTPDownloader, historic_county, station_ids, start_year, end_year)
-
-# Use HTTPDownloader (DAP)
-download_midas_open_hourly_files(HTTPDownloader, historic_county, station_ids, start_year, end_year)
-```
-
-4. The downloaded files will be saved in the current directory.
 
 ## Sequence Diagram
 
@@ -78,14 +92,19 @@ The following sequence diagram illustrates the high-level interactions and flow 
 
 ## Project Structure
 
-- `downloader.py`: The main module for downloading MIDAS Open dataset files.
-- `abstract_downloader.py`: An abstract base class for the downloader implementations.
-- `ftp_downloader.py`: The FTP downloader implementation.
-- `dap_downloader.py`: The DAP downloader implementation.
-- `station_capabilities_parser.py`: A module for parsing station capabilities files.
+- `midas_open_downloader/`: The main package directory.
+  - `__main__.py`: The entry point for running the package as a module.
+  - `retriever.py`: The main module for downloading MIDAS Open dataset files.
+  - `repository.py`: The module for interacting with the data repository.
+  - `abstract_downloader.py`: An abstract base class for the downloader implementations.
+  - `ftp_downloader.py`: The FTP downloader implementation.
+  - `dap_downloader.py`: The DAP downloader implementation.
+  - `parser.py`: A module for parsing station capabilities files.
 - `conf/`: Directory for storing configuration files.
   - `ftp_account.txt`: File containing FTP username and password.
   - `dap_account.txt`: File containing DAP username and password.
+- `__tests__/`: Directory for test files.
+
 
 ## Contributing
 

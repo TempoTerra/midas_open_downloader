@@ -4,3 +4,4 @@ beautifulsoup4
 cryptography
 ContrailOnlineCAClient
 midas_open_parser
+pytest
