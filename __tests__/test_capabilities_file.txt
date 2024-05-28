@@ -1,0 +1,5 @@
+data
+id,id_type,met_domain_name,first_year,last_year
+4617,DCNN,DLY3208,1972,2006
+4617,DCNN,AWSHRLY,2006,2022
+end data

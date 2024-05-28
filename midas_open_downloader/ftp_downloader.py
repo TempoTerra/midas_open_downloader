@@ -3,7 +3,8 @@ import ftplib
 import logging
 from typing import List
 
-from abstract_downloader import DownloadError, MidasOpenDownloader
+from .abstract_downloader import MidasOpenDownloader
+from .errors import DownloadError
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -16,21 +17,20 @@ class FTPDownloader(MidasOpenDownloader):
         self.base_path = "/badc/ukmo-midas-open/data/uk-hourly-weather-obs"
         self.ftp = None
 
+    def init(self):
+        self.setup_credentials()
+        self.ftp = ftplib.FTP(self.ftp_server)
+        self.ftp.login(self.username, self.password)
+
+    def cleanup(self):
+        if self.ftp:
+            self.ftp.close()
+
     def setup_credentials(self):
         with open("./conf/ftp_account.txt", "r") as f:
             lines = f.readlines()
             self.username = lines[0].strip()
             self.password = lines[1].strip()
-
-    def __enter__(self):
-        self.setup_credentials()
-        self.ftp = ftplib.FTP(self.ftp_server)
-        self.ftp.login(self.username, self.password)
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        if self.ftp:
-            self.ftp.close()
 
     def download(self, file_path):
         filename = file_path.rsplit('/', 1)[-1]

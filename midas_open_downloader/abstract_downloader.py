@@ -1,15 +1,21 @@
 import logging
 import time
 from abc import ABC, abstractmethod
+from .errors import DownloadError
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class DownloadError(Exception):
-    pass
-
 class MidasOpenDownloader(ABC):
     def __init__(self):
+        pass
+
+    @abstractmethod
+    def init(self):
+        pass
+
+    @abstractmethod
+    def cleanup(self):
         pass
 
     @abstractmethod

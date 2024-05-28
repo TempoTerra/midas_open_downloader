@@ -5,7 +5,8 @@ import logging
 from typing import List
 from bs4 import BeautifulSoup
 
-from abstract_downloader import DownloadError, MidasOpenDownloader
+from .abstract_downloader import MidasOpenDownloader
+from .errors import DownloadError
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -139,12 +140,12 @@ class HTTPDownloader(MidasOpenDownloader):
 
         pass
 
-    def __enter__(self):
+    def init(self):
         self.session = requests.Session()
         self.setup_credentials()
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def cleanup(self):
         if self.session:
             self.session.close()
 
