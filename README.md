@@ -2,6 +2,13 @@
 
 This project provides a mechanism for retrieving the MIDAS Open dataset from the Centre for Environmental Data Analysis (CEDA) Archive. The dataset is available in the BADC-CSV format and can be downloaded using either FTP or DAP (Data Access Protocol).
 
+To use the MIDAS Open Dataset Downloader, you would typically follow these steps:
+
+1. Download and install dependencies
+2. Create a CEDA account to gain access to the dataset.
+3. Configure the downloader with your CEDA account credentials for FTP and/or DAP access.
+4. Run the downloader using CLI or as a library
+
 ## Thirdparty Resources
 
 * [Create CEDA account](https://services.ceda.ac.uk/cedasite/register/info/)
@@ -96,9 +103,10 @@ The following sequence diagram illustrates the high-level interactions and flow 
   - `__main__.py`: The entry point for running the package as a module.
   - `retriever.py`: The main module for downloading MIDAS Open dataset files.
   - `repository.py`: The module for interacting with the data repository.
-  - `abstract_downloader.py`: An abstract base class for the downloader implementations.
-  - `ftp_downloader.py`: The FTP downloader implementation.
-  - `dap_downloader.py`: The DAP downloader implementation.
+  - `downloader/`:  The package directory to group the downloader-related modules
+    - `abstract_downloader.py`: An abstract base class for the downloader implementations.
+    - `ftp_downloader.py`: The FTP downloader implementation.
+    - `dap_downloader.py`: The DAP downloader implementation.
   - `parser.py`: A module for parsing station capabilities files.
 - `conf/`: Directory for storing configuration files.
   - `ftp_account.txt`: File containing FTP username and password.
