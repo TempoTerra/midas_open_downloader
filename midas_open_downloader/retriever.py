@@ -3,7 +3,7 @@ import logging
 from typing import List
 
 from .repository import Repository
-from .errors import DownloadError
+from .downloader.errors import DownloadError
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

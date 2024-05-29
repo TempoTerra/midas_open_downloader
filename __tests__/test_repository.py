@@ -2,7 +2,7 @@ import pytest
 import os
 from unittest.mock import MagicMock, patch
 from midas_open_downloader.repository import Repository
-from midas_open_downloader.errors import DownloadError
+from midas_open_downloader.downloader.errors import DownloadError
 from midas_open_downloader.parser import StationCapabilities
 
 current_dir = os.path.dirname(os.path.abspath(__file__))

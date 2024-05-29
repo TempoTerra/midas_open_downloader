@@ -1,8 +1,8 @@
 import logging
 
-from .ftp_downloader import FTPDownloader
-from .dap_downloader import HTTPDownloader
-from .errors import DownloadError
+from .downloader.ftp_downloader import FTPDownloader
+from .downloader.dap_downloader import HTTPDownloader
+from .downloader.errors import DownloadError
 from .parser import StationCapabilities
 
 logging.basicConfig(level=logging.INFO)
